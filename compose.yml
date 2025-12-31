@@ -5,7 +5,7 @@ services:
   frontend:
     image: frontendimage:latest
     ports:
-      - "80:3000"        # ✅ ONLY public entry
+      - "80:5000"        # ✅ ONLY public entry
     networks:
       - appnet
 
