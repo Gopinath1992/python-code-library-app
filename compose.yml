@@ -1,42 +1,33 @@
 ---
+version: "3.8"
+
 services:
+  frontend:
+    image: frontendimage
+    ports:
+      - "5000:5000"
+    depends_on:
+      - auth
+      - book
+      - borrow
+
+  auth:
+    image: authimage
+    ports:
+      - "5000:5000"
+
+  book:
+    image: bookimage
+    ports:
+      - "5001:5001"
+
+  borrow:
+    image: borrowimage
+    ports:
+      - "5002:5002"
+
   db:
     image: dbimage
     ports:
       - "3306:3306"
-    deploy:
-      replicas: 3
 
-
-  auth_service:
-    image: authimage
-    ports:
-      - "5001:5001"
-    deploy:
-      replicas: 3
-
-
-  book_service:
-    image: bookimage
-    ports:
-      - "5002:5002"
-    deploy:
-      replicas: 3
-
-
-  borrow_service:
-    image: borrowimage
-    ports:
-      - "5003:5003"
-    deploy:
-      replicas: 3
-
-
-  frontend:
-    image: fronrendimage
-    ports:
-      - "5000:5000"
-    deploy:
-      replicas: 3
-    depends_on:
-      - "db"
