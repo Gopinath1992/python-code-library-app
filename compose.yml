@@ -3,31 +3,33 @@ version: "3.8"
 
 services:
   frontend:
-    image: frontendimage
+    image: frontendimage:latest
     ports:
-      - "5000:5000"
-    depends_on:
-      - auth
-      - book
-      - borrow
+      - "80:3000"        # ✅ ONLY public entry
+    networks:
+      - appnet
 
   auth:
-    image: authimage
-    ports:
-      - "5000:5000"
+    image: authimage:latest
+    networks:
+      - appnet
 
   book:
-    image: bookimage
-    ports:
-      - "5001:5001"
+    image: bookimage:latest
+    networks:
+      - appnet
 
   borrow:
-    image: borrowimage
-    ports:
-      - "5002:5002"
+    image: borrowimage:latest
+    networks:
+      - appnet
 
   db:
-    image: dbimage
-    ports:
-      - "3306:3306"
+    image: dbimage:latest
+    networks:
+      - appnet
+
+networks:
+  appnet:
+    driver: overlay
 
