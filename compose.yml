@@ -1,35 +1,48 @@
 ---
-version: "3.8"
-
 services:
-  frontend:
-    image: frontendimage:latest
-    ports:
-      - "80:5000"        # ✅ ONLY public entry
-    networks:
-      - appnet
-
-  auth:
-    image: authimage:latest
-    networks:
-      - appnet
-
-  book:
-    image: bookimage:latest
-    networks:
-      - appnet
-
-  borrow:
-    image: borrowimage:latest
-    networks:
-      - appnet
-
   db:
-    image: dbimage:latest
+    image: gopi0810/mypythonapp1:dbimage
+    ports:
+      - "3306:3306"
     networks:
-      - appnet
+      - gopinetwork
+    deploy:
+      replicas: 2
+
+  auth_service:
+    image: gopi0810/mypythonapp1:authimage
+    ports:
+      - "5001:5001"
+    networks:
+      - gopinetwork
+    deploy:
+      replicas: 2
+
+  book_service:
+    image: gopi0810/mypythonapp1:bookimage
+    ports:
+      - "5002:5002"
+    networks:
+      - gopinetwork
+    deploy:
+      replicas: 2
+
+  borrow_service:
+    image: gopi0810/mypythonapp1:borrowimage
+    ports:
+      - "5003:5003"
+    deploy:
+      replicas: 2
+    networks:
+      - gopinetwork
+  frontend_service:
+    image: gopi0810/mypythonapp1:frontendimage
+      - "5000:5000"
+    networks:
+      - gopinetwork
+    deploy:
+      replicas: 2
 
 networks:
-  appnet:
+  gopinetwork:
     driver: overlay
-
