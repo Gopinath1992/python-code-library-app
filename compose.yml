@@ -37,11 +37,12 @@ services:
       - gopinetwork
   frontend_service:
     image: gopi0810/mypythonapp1:frontendimage
+    ports:
       - "5000:5000"
     networks:
       - gopinetwork
     deploy:
-      replicas: 2
+      replicas: 1
 
 networks:
   gopinetwork:
